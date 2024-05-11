@@ -1,6 +1,6 @@
 "use client";
 import { useDisconnect, useWeb3Modal } from "@web3modal/ethers/react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import {
   useWeb3ModalProvider,
   useWeb3ModalAccount,
@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/sheet";
 import { Power, Sparkle } from "lucide-react";
 import { useEffect, useState } from "react";
-import { ModeToggle } from "../ModeToggle";
+import { ModeToggle } from "../../ModeToggle";
 
 export default function ConnectButton() {
   const [networkName, setNetworkName] = useState<string>("");

@@ -6,6 +6,7 @@ import TopBar from "@/components/shared/TopBar";
 import { ThemeProvider } from "@/context/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { Web3Modal } from "@/context/web3modal";
+import BottomBar from "@/components/shared/BottomBar.tsx";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,6 +34,7 @@ export default function RootLayout({
               <TopBar />
               <main>{children}</main>
               <Toaster/>
+              <BottomBar/>
             </Web3Modal>
           </ThemeProvider>
         </body>
