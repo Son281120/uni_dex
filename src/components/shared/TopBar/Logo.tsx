@@ -10,6 +10,7 @@ export default function Logo () {
           alt="logo"
           height={40}
           width={40}
+          className="m-w-[40px] m-h-[40px]"
         />
       </Link>
     </div>
