@@ -1,18 +1,13 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { ReduxProvider } from "@/redux/provider";
-import TopBar from "@/components/shared/TopBar";
-import { ThemeProvider } from "@/context/theme-provider";
-import { Toaster } from "@/components/ui/toaster";
-import { Web3Modal } from "@/context/web3modal";
+'use client';
 
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Uniswap Dapp",
-  description: "Uniswap clone Dapp project Tc-X23-Blockchain",
-};
+import { Inter } from 'next/font/google';
+import './globals.css';
+import { ReduxProvider } from '@/redux/provider';
+import { ThemeProvider } from '@/context/theme-provider';
+import { Toaster } from '@/components/ui/toaster';
+import { Web3Modal } from '@/context/web3modal';
+import { BrowserRouter } from 'react-router-dom';
+const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
   children,
@@ -20,23 +15,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ReduxProvider>
-      <html lang="en" suppressHydrationWarning>
-        <body className={inter.className}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Web3Modal>
-              <TopBar />
-              <main>{children}</main>
-              <Toaster/>
-            </Web3Modal>
-          </ThemeProvider>
-        </body>
-      </html>
-    </ReduxProvider>
+    <BrowserRouter>
+      <ReduxProvider>
+        <html lang="en" suppressHydrationWarning>
+          <body className={inter.className}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <Web3Modal>
+                <main>{children}</main>
+                <Toaster />
+              </Web3Modal>
+            </ThemeProvider>
+          </body>
+        </html>
+      </ReduxProvider>
+    </BrowserRouter>
   );
 }
