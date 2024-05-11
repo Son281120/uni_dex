@@ -3,7 +3,7 @@ import { Input } from "../../ui/input";
 
 const SearchToken = () => {
   return (
-    <div className="relative flex items-center xl:w-[500px] lg:w-[500] md:w-[500px] xs:w-[320px]">
+    <div className="relative flex items-center md:w-[500px] m-w-[320px]">
       <Input
         type="text"
         placeholder="Search tokens and NFT collections"

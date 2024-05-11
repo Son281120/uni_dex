@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NavBar() {
   return (
-    <nav className="md:hidden lg:block">
+    <nav className="hidden lg:block">
       <ul className="flex items-center justify-center">
         <li className="px-3 py-2 text-primary rounded-xl hover:bg-accent transition-colors"><Link href={"/"}>Swap</Link></li>
         <li className="px-3 py-2 text-primary rounded-xl hover:bg-accent transition-colors"><Link href={"/explore"}>Explore</Link></li>

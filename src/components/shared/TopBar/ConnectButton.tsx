@@ -43,9 +43,9 @@ export default function ConnectButton() {
       {isConnected ? (
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant={"outline"} className="rounded-xl">
-              <Sparkle className=""/>
-              <span className="inline-block px-2 bg-gradient-to-br from-red-500 to-blue-500 text-transparent  bg-clip-text">
+            <Button variant={"outline"} className="rounded-xl px-2 py-1 md:px-2 md:py-4 transition-all">
+              <Sparkle/>
+              <span className="hidden md:block px-2 bg-gradient-to-br from-red-500 to-blue-500 text-transparent  bg-clip-text ">
                 {address?.slice(0, 6) +
                   "..." +
                   address?.slice(address.length - 5, address.length)}
