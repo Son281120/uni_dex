@@ -2,11 +2,6 @@
 import { useDisconnect, useWeb3Modal } from "@web3modal/ethers/react";
 import { Button } from "../../ui/button";
 import {
-  useWeb3ModalProvider,
-  useWeb3ModalAccount,
-} from "@web3modal/ethers/react";
-import { BrowserProvider } from "ethers";
-import {
   Sheet,
   SheetClose,
   SheetContent,
@@ -15,36 +10,25 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Power, Sparkle } from "lucide-react";
-import { useEffect, useState } from "react";
 import { ModeToggle } from "../../ModeToggle";
+import useConnectWallet from "@/hooks/useConnectWallet";
 
 export default function ConnectButton() {
-  const [networkName, setNetworkName] = useState<string>("");
   const { open } = useWeb3Modal();
-  const { walletProvider } = useWeb3ModalProvider();
-  const { address,chainId, isConnected } = useWeb3ModalAccount();
   const { disconnect } = useDisconnect();
 
-  useEffect(() => {
-    const getData = async () => {
-      if (walletProvider) {
-        const ethersProvider = new BrowserProvider(walletProvider as any);
-        const balance = await ethersProvider.getBalance(address as string);
-        const network = await ethersProvider._network;
-        setNetworkName(network.name);
-      }
-      return;
-    };
-    getData();
-  }, [walletProvider, chainId, address]);
+  const [address, networkName] = useConnectWallet();
 
   return (
     <div>
-      {isConnected ? (
+      {address ? (
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant={"outline"} className="rounded-xl px-2 py-1 md:px-2 md:py-4 transition-all">
-              <Sparkle/>
+            <Button
+              variant={"outline"}
+              className="rounded-xl px-2 py-1 md:px-2 md:py-4 transition-all"
+            >
+              <Sparkle />
               <span className="hidden md:block px-2 bg-gradient-to-br from-red-500 to-blue-500 text-transparent  bg-clip-text ">
                 {address?.slice(0, 6) +
                   "..." +
@@ -78,7 +62,7 @@ export default function ConnectButton() {
                 <Button
                   variant={"ghost"}
                   size={"icon"}
-                  className="py-1 px-2 rounded-full cursor-pointer"
+                  className="py-1 px-2 rounded-full cursor-pointer hover:bg-destructive hover:text-destructive-foreground"
                   onClick={() => disconnect()}
                 >
                   <Power className="h-[1.2rem] w-[1.2rem]" />
@@ -90,7 +74,9 @@ export default function ConnectButton() {
           </SheetContent>
         </Sheet>
       ) : (
-        <Button onClick={() => open()} className="rounded-xl">Connect Wallet</Button>
+        <Button onClick={() => open()} className="rounded-xl">
+          Connect Wallet
+        </Button>
       )}
     </div>
   );
