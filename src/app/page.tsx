@@ -1,9 +1,11 @@
+import SwapTokenCard from "@/components/Swap";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <div>
-      <h1>Main</h1>
-    </div>
+    <section>
+      <SwapTokenCard/>
+    </section>
   );
 }

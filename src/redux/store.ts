@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./features/auth.slide";
+import walletReducer from "./features/wallet.slide";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import swapReducer from "./features/swap.slide";
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer,
+    wallet: walletReducer,
+    swap: swapReducer
   },
 });
 
