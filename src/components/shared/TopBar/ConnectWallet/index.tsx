@@ -1,6 +1,6 @@
 "use client";
 import { useDisconnect, useWeb3Modal } from "@web3modal/ethers/react";
-import { Button } from "../../ui/button";
+import { Button } from "../../../ui/button";
 import {
   Sheet,
   SheetClose,
@@ -10,14 +10,28 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Power, Sparkle } from "lucide-react";
-import { ModeToggle } from "../../ModeToggle";
-import useConnectWallet from "@/hooks/useConnectWallet";
+import { ModeToggle } from "../../../ModeToggle";
+import HistoryTransaction from "./HistoryTransaction";
+import useWallet from "@/hooks/useWallet";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useEffect } from "react";
+import { connectWallet, disconnectWallet } from "@/redux/features/wallet.slide";
 
 export default function ConnectButton() {
   const { open } = useWeb3Modal();
   const { disconnect } = useDisconnect();
+  const { wallet, setWallet } = useWallet();
+  const network = wallet?.network;
+  const addressf = wallet?.address;
+  const provider = wallet?.ethersProvider;
+  const dispatch = useAppDispatch();
+  const address = useAppSelector((state) => state.wallet);
 
-  const [address, networkName] = useConnectWallet();
+  useEffect(() => {
+    if (addressf) {
+      dispatch(connectWallet(addressf));
+    }
+  }, [addressf, dispatch]);
 
   return (
     <div>
@@ -53,7 +67,7 @@ export default function ConnectButton() {
                 onClick={() => open({ view: "Networks" })}
                 className="rounded-full"
               >
-                {networkName}
+                {network?.name}
               </Button>
             </div>
             <div>
@@ -63,13 +77,23 @@ export default function ConnectButton() {
                   variant={"ghost"}
                   size={"icon"}
                   className="py-1 px-2 rounded-full cursor-pointer hover:bg-destructive hover:text-destructive-foreground"
-                  onClick={() => disconnect()}
+                  onClick={() => {
+                    disconnect();
+                    dispatch(disconnectWallet());
+                    setWallet({
+                      address: "",
+                      network: null,
+                      signer: undefined,
+                      contract: undefined,
+                      ethersProvider: undefined,
+                    });
+                  }}
                 >
                   <Power className="h-[1.2rem] w-[1.2rem]" />
                 </Button>
               </SheetClose>
             </div>
-
+            <HistoryTransaction address={address} />
             {/* <Button onClick={getBalance}>get balane</Button> */}
           </SheetContent>
         </Sheet>

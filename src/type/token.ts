@@ -1,9 +1,9 @@
-interface IToken {
+export interface IToken {
   address: string;
   name: string;
   symbol: string;
   logo: string;
-  balance: number;
-  amount?:number;
-
+  price: string;
+  amount?: string;
+  balance?: string;
 }

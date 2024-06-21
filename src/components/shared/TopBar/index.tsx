@@ -1,4 +1,4 @@
-import ConnectButton from "./ConnectButton";
+import ConnectButton from "./ConnectWallet";
 import Logo from "./Logo";
 import NavBar from "./NavBar";
 import SearchToken from "./SearchToken";
