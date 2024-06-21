@@ -1,22 +1,15 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BrowserProvider, Eip1193Provider } from "ethers";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-// export const connectWallet = createAsyncThunk(
-//   'account/fetchAccount',
-//   async () => {
-//   }
-// )
 export const walletSlide = createSlice({
   name: "wallet",
-  initialState: {},
+  initialState: "",
   reducers: {
     disconnectWallet: (state) => {
-      state = {};
+      return "";
     },
-    connectWallet: (state, action: PayloadAction<any>) => {
-      state = action.payload;
-    }
-    
+    connectWallet: (state, action: PayloadAction<string>) => {
+      return (state = action.payload);
+    },
   },
 });
 

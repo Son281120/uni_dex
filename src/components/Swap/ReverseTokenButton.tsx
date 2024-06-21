@@ -1,14 +1,36 @@
-"use client";
-import { swapFirstAndSecond } from "@/redux/features/swap.slide";
-import { useAppDispatch } from "@/redux/store";
+import { IToken } from "@/type/token";
 import { ArrowDown } from "lucide-react";
-
-const ReverseTokenButton = () => {
-  const dispatch = useAppDispatch();
+import { Dispatch, SetStateAction } from "react";
+type ReverseTokenButtonProps = {
+  firstToken: IToken;
+  setFirstToken: Dispatch<SetStateAction<IToken>>;
+  secondToken: IToken;
+  setSecondToken: Dispatch<SetStateAction<IToken>>;
+  isFirst: boolean;
+  setIsFirst: Dispatch<SetStateAction<boolean>>;
+  isSecond: boolean;
+  setIsSecond: Dispatch<SetStateAction<boolean>>;
+};
+const ReverseTokenButton = (props: ReverseTokenButtonProps) => {
+  const {
+    firstToken,
+    setFirstToken,
+    secondToken,
+    setSecondToken,
+    isFirst,
+    setIsFirst,
+    isSecond,
+    setIsSecond,
+  } = props;
 
   const swapFirstTokenAndSecondToken = () => {
-    dispatch(swapFirstAndSecond());
+    let temp = { ...firstToken };
+    setFirstToken({ ...secondToken });
+    setSecondToken({ ...temp });
+    setIsFirst(!isFirst);
+    setIsSecond(!isSecond);
   };
+  
   return (
     <button
       onClick={swapFirstTokenAndSecondToken}

@@ -8,11 +8,11 @@ interface ButtonTriggerProps {
     name: string;
     symbol: string;
     logo: string;
-    balance: number;
+    price: number;
   };
 }
 
-export default function ButtonTrigger(props: ButtonTriggerProps) {
+export default function ButtonTriggerFirst(props: ButtonTriggerProps) {
   const { address, name, symbol, logo } = props.token;
   return (
     <DialogTrigger asChild>

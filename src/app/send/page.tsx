@@ -1,5 +1,9 @@
+import SendTestPage from "@/components/send";
+
 export default function SendPage() {
   return (
-    <div>Send Page</div>
+    <div>
+      <SendTestPage/>
+    </div>
   )
 }
