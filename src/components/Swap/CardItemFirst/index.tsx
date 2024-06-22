@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { ethers } from "ethers";
+import { formatEther } from "ethers";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import useWallet from "@/hooks/useWallet";
 import { IToken } from "@/type/token";
@@ -45,7 +45,7 @@ const CardItemFirst = (props: CardItemFirstProps) => {
         if (firstToken.address && contract) {
           const balance = await contract.getBalanceOfToken(firstToken.address);
           const balanceFormat = formatNumber(
-            Number(ethers.formatEther(balance))
+            Number(formatEther(balance))
           ).toString();
           setFirstToken((prev) => ({
             ...prev,
@@ -74,7 +74,9 @@ const CardItemFirst = (props: CardItemFirstProps) => {
     try {
       if (contract) {
         const amountInMax = await contract.getAmountInMax(firstToken.address);
-        const amountInMaxFormat = ethers.formatEther(amountInMax);
+        const amountInMaxFormat = formatNumber(
+          Number(formatEther(amountInMax))
+        ).toString();
         setFirstToken((prev) => ({
           ...prev,
           amount: amountInMaxFormat,

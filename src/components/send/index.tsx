@@ -1,93 +1,63 @@
 "use client";
-import { useEffect, useState } from "react";
-import { createWeb3Modal, useWeb3ModalProvider } from "@web3modal/ethers/react";
-import { IWallet } from "@/type/wallet";
-import { BrowserProvider, parseEther, ethers } from "ethers";
-import Tether from "../../../contracts/Tether.json";
-import Cardano from "../../../contracts/Cardano.json";
-import Ton from "../../../contracts/Ton.json";
-import Link from "../../../contracts/Link.json";
+import React, { useState } from "react";
+import SendInputAmount from "./SendInputAmount";
+import SendTokenListGroup from "./SendTokenListGroup";
+import { IToken } from "@/type/token";
+import { USDT_CONTRACT_ADDRESS } from "@/config";
+import SendAddressReceiver from "./SendAddressReceiver";
+import SendButton from "./SendButton";
+import { useAppSelector } from "@/redux/store";
+import useDebounce from "@/hooks/useDebounce";
+import SendPopUpConfirm from "./SendPopUpConfirm";
 
-import { Button } from "../ui/button";
-import { TokenContract } from "@/type/tokenContract";
-import { CONTRACT_ADDRESS } from "@/config";
+const tokenInit = {
+  address: USDT_CONTRACT_ADDRESS,
+  name: "Tether",
+  symbol: "USDT",
+  logo: "/tether-usdt-logo.svg",
+  price: "268000000000000",
+  amount: "",
+  balance: "0",
+};
 
-const SendTestPage = () => {
-  const { walletProvider } = useWeb3ModalProvider();
-  const [contract, setContract] = useState<TokenContract>();
-  useEffect(() => {
-    const fetchWallet = async () => {
-      if (walletProvider) {
-        const ethersProvider = new BrowserProvider(walletProvider);
-        const signer = await ethersProvider.getSigner();
+type AddressReceiver = {
+  receiver: string;
+  isAddress: boolean;
+};
 
-        const cardanoContract = new ethers.Contract(
-          "0x868C1bf25f05f7245A92A5BEd9819B027D542B07",
-          Cardano.abi,
-          signer
-        );
-        const tetherContract = new ethers.Contract(
-          "0x84Daf9Fe3bBd3A1DC63B8E864d0c4a2f0C3aD9Ff",
-          Tether.abi,
-          signer
-        );
-        const linkContract = new ethers.Contract(
-          "0x8855d936F63D3e101Ed18853Fee710B9B33037fD",
-          Link.abi,
-          signer
-        );
-        const tonContract = new ethers.Contract(
-          "0x157C0F00b7fF86C144036e72cDb345022E5B2215",
-          Ton.abi,
-          signer
-        );
-        setContract({
-          cardanoContract,
-          tetherContract,
-          tonContract,
-          linkContract,
-        });
-      }
-    };
-    fetchWallet();
-  }, [walletProvider]);
-
-  const handleMint = async () => {
-    if (contract?.cardanoContract) {
-      const amount = parseEther("100000");
-      await contract.cardanoContract.mint(CONTRACT_ADDRESS, amount);
-      alert("ok");
-    }
-    if (contract?.tetherContract) {
-      const amount = parseEther("100000");
-      await contract.tetherContract.mint(CONTRACT_ADDRESS, amount);
-      alert("ok");
-    }
-    if (contract?.tonContract) {
-      const amount = parseEther("100000");
-      await contract.tonContract.mint(CONTRACT_ADDRESS, amount);
-      alert("ok");
-    }
-    if (contract?.linkContract) {
-      const amount = parseEther("100000");
-      await contract.linkContract.mint(CONTRACT_ADDRESS, amount);
-      alert("ok");
-    }
-  };
-
-  const handleBalance = async () => {
-    // if(wallet?.contract){
-    //   const balanceBigInt = await wallet.contract.balanceOf(CONTRACT_ADDRESS);
-    //   console.log(ethers.formatEther(balanceBigInt));
-    // }
-  };
-
+const SendCard = () => {
+  const [token, setToken] = useState<IToken>(tokenInit);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [addressReceiver, setAddressReceiver] = useState<AddressReceiver>({
+    receiver: "",
+    isAddress: true,
+  });
+  const amountIn = useDebounce(token.amount, 1000);
+  const address = useAppSelector((state) => state.wallet);
   return (
-    <div className="flex items-center justify-center">
-      <Button onClick={handleMint}>Mint</Button>
-      <Button onClick={handleBalance}>Balance</Button>
+    <div className="flex flex-col justify-center gap-1 min-h-[500px] min-w-fit rounded-3xl border border-primary-foreground shadow-xl ring-2 ring-accent p-2">
+      <SendInputAmount token={token} setToken={setToken} amountIn={amountIn} />
+      <SendTokenListGroup token={token} setToken={setToken} address={address} />
+      <SendAddressReceiver
+        addressReceiver={addressReceiver}
+        setAddressReceiver={setAddressReceiver}
+      />
+      <SendButton
+        token={token}
+        addressReceiver={addressReceiver}
+        address={address}
+        setIsOpen={setIsOpen}
+      />
+      <SendPopUpConfirm
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        token={token}
+        setToken={setToken}
+        addressReceiver={addressReceiver}
+        setAddressReceiver={setAddressReceiver}
+      />
     </div>
   );
 };
 
-export default SendTestPage;
+export default SendCard;

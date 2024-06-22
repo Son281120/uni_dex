@@ -1,9 +1,11 @@
-import SendTestPage from "@/components/send";
+import SendCard from "@/components/send";
 
 export default function SendPage() {
   return (
-    <div>
-      <SendTestPage/>
-    </div>
+    <section className="flex justify-center h-[calc(100vh-86px)]">
+      <div className="mt-20 md:mt-32 w-[300px] md:w-[460px] ">
+        <SendCard/>
+      </div>
+    </section>
   )
 }

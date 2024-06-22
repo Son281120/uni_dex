@@ -22,7 +22,7 @@ type TokenlistProps = {
   setToken: Dispatch<SetStateAction<IToken>>;
 };
 
-const BuyTokenList = (props: TokenlistProps) => {
+const SendTokenList = (props: TokenlistProps) => {
   const { token, setToken } = props;
   const { address, name, symbol, logo, price } = token;
 
@@ -94,4 +94,4 @@ const BuyTokenList = (props: TokenlistProps) => {
   );
 };
 
-export default BuyTokenList;
+export default SendTokenList;
