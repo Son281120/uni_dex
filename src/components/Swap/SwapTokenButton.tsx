@@ -7,15 +7,16 @@ import useTokenContract from "@/hooks/useTokenContract";
 import { IToken } from "@/type/token";
 import {
   ADA_CONTRACT_ADDRESS,
+  CONTRACT_ADDRESS,
   LINK_CONTRACT_ADDRESS,
   TON_CONTRACT_ADDRESS,
   USDT_CONTRACT_ADDRESS,
 } from "@/config";
-import { useToast } from "../ui/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
 import { CheckCheck } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 import { useWeb3Modal } from "@web3modal/ethers/react";
+import { toast } from "../ui/use-toast";
 
 type SwapTokenButtonProps = {
   firstToken: IToken;
@@ -25,7 +26,6 @@ type SwapTokenButtonProps = {
 };
 
 const SwapTokenButton = (props: SwapTokenButtonProps) => {
-  const { toast } = useToast();
   const { open } = useWeb3Modal();
   const { firstToken, secondToken, setFirstToken, setSecondToken } = props;
   const address = useAppSelector((state) => state.wallet);
@@ -59,7 +59,7 @@ const SwapTokenButton = (props: SwapTokenButtonProps) => {
           secondToken.amount
         ) {
           const approveTx = await cardanoContract.approve(
-            "0x64F12D9e31FfDb745407445E2C010F3Aa13b8f50",
+            CONTRACT_ADDRESS,
             BigInt(parseEther(firstToken.amount))
           );
 
@@ -102,7 +102,7 @@ const SwapTokenButton = (props: SwapTokenButtonProps) => {
           secondToken.amount
         ) {
           const approveTx = await tetherContract.approve(
-            "0x64F12D9e31FfDb745407445E2C010F3Aa13b8f50",
+            CONTRACT_ADDRESS,
             BigInt(parseEther(firstToken.amount))
           );
           toast({
@@ -144,7 +144,7 @@ const SwapTokenButton = (props: SwapTokenButtonProps) => {
           secondToken.amount
         ) {
           const approveTx = await tonContract.approve(
-            "0x64F12D9e31FfDb745407445E2C010F3Aa13b8f50",
+            CONTRACT_ADDRESS,
             BigInt(parseEther(firstToken.amount))
           );
           toast({
@@ -186,7 +186,7 @@ const SwapTokenButton = (props: SwapTokenButtonProps) => {
           secondToken.amount
         ) {
           const approveTx = await linkContract.approve(
-            "0x64F12D9e31FfDb745407445E2C010F3Aa13b8f50",
+            CONTRACT_ADDRESS,
             BigInt(parseEther(firstToken.amount))
           );
           toast({

@@ -1,5 +1,11 @@
+import BuyCard from "@/components/buy";
+
 export default function BuyPage() {
   return (
-    <div>Buy Page</div>
-  )
+    <div className="flex justify-center h-[calc(100vh-86px)]">
+      <div className="mt-32 w-[300px] md:w-[400px] ">
+        <BuyCard />
+      </div>
+    </div>
+  );
 }

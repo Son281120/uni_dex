@@ -87,7 +87,7 @@ const TokenListSecond = (props: TokenlistProps) => {
                       selectToken(address, name, symbol, logo, price)
                     }
                   >
-                    <div className=" w-7 h-7 rounded-full shadow-sm bg-secondary/80">
+                    <div className=" w-7 h-7 rounded-full shadow-sm">
                       <Image
                         src={logo}
                         alt={name}

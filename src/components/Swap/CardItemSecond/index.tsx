@@ -6,7 +6,7 @@ import { IToken } from "@/type/token";
 import { formatNumber } from "@/config/formatNumber";
 import InputAmountSecond from "./InputAmountSecond";
 import TokenListSecond from "./TokenListSecond";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "@/components/ui/use-toast";
 
 type CardItemSecondProps = {
   firstToken: IToken;
@@ -30,8 +30,6 @@ const CardItemSecond = (props: CardItemSecondProps) => {
     isSecond,
     setIsSecond,
   } = props;
-
-  const { toast } = useToast();
 
   const { wallet } = useWallet();
   const address = wallet?.address;
@@ -63,7 +61,7 @@ const CardItemSecond = (props: CardItemSecondProps) => {
   }, [secondToken, contract, setSecondToken]);
 
   return (
-    <div className="flex flex-col justify-between w-[480px] min-h-24 rounded-xl p-4 bg-secondary">
+    <div className="flex flex-col justify-between w-[340px] md:w-[480px] min-h-24 rounded-xl p-4 bg-secondary">
       <span className="text-left text-primary/60 text-sm pb-2">
         You receive
       </span>

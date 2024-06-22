@@ -7,8 +7,8 @@ import { IToken } from "@/type/token";
 import { formatNumber } from "@/config/formatNumber";
 import InputAmountFirst from "./InputAmountFirst";
 import TokenListFirst from "./TokenListFirst";
-import { useToast } from "@/components/ui/use-toast";
 import { useAppSelector } from "@/redux/store";
+import { toast } from "@/components/ui/use-toast";
 
 type CardItemFirstProps = {
   firstToken: IToken;
@@ -33,7 +33,6 @@ const CardItemFirst = (props: CardItemFirstProps) => {
     setIsSecond,
   } = props;
 
-  const { toast } = useToast();
   const { wallet } = useWallet();
   const signer = wallet?.signer;
   const contract = wallet?.contract;
@@ -91,7 +90,7 @@ const CardItemFirst = (props: CardItemFirstProps) => {
   };
 
   return (
-    <div className="flex flex-col justify-between w-[480px] min-h-24 rounded-xl p-4 bg-secondary">
+    <div className="flex flex-col justify-between w-[340px] md:w-[480px] min-h-24 rounded-xl p-4 bg-secondary">
       <span className="text-left text-primary/60 text-sm pb-2">You pay</span>
       <div className="flex items-center">
         <InputAmountFirst

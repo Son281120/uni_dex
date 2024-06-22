@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <ReduxProvider>
       <html lang="en" suppressHydrationWarning>
-        <body className={inter.className}>
+        <body className={`${inter.className} relative`}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
