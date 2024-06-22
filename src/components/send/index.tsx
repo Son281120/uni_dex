@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import { createWeb3Modal, useWeb3ModalProvider } from "@web3modal/ethers/react";
 import { IWallet } from "@/type/wallet";
@@ -8,20 +8,19 @@ import Cardano from "../../../contracts/Cardano.json";
 import Ton from "../../../contracts/Ton.json";
 import Link from "../../../contracts/Link.json";
 
-
-
 import { Button } from "../ui/button";
 import { TokenContract } from "@/type/tokenContract";
+import { CONTRACT_ADDRESS } from "@/config";
 
 const SendTestPage = () => {
   const { walletProvider } = useWeb3ModalProvider();
-  const [contract, setContract ] = useState<TokenContract>();
+  const [contract, setContract] = useState<TokenContract>();
   useEffect(() => {
     const fetchWallet = async () => {
       if (walletProvider) {
         const ethersProvider = new BrowserProvider(walletProvider);
         const signer = await ethersProvider.getSigner();
-        
+
         const cardanoContract = new ethers.Contract(
           "0x868C1bf25f05f7245A92A5BEd9819B027D542B07",
           Cardano.abi,
@@ -42,47 +41,51 @@ const SendTestPage = () => {
           Ton.abi,
           signer
         );
-        setContract({cardanoContract, tetherContract, tonContract, linkContract})
+        setContract({
+          cardanoContract,
+          tetherContract,
+          tonContract,
+          linkContract,
+        });
       }
     };
     fetchWallet();
   }, [walletProvider]);
 
   const handleMint = async () => {
-    if(contract?.cardanoContract){
-      const amount = parseEther("4000")
-      await contract.cardanoContract.mint("0x64F12D9e31FfDb745407445E2C010F3Aa13b8f50", amount)
-      alert("ok")
+    if (contract?.cardanoContract) {
+      const amount = parseEther("100000");
+      await contract.cardanoContract.mint(CONTRACT_ADDRESS, amount);
+      alert("ok");
     }
-    if(contract?.tetherContract){
-      const amount = parseEther("4000")
-      await contract.tetherContract.mint("0x64F12D9e31FfDb745407445E2C010F3Aa13b8f50", amount)
-      alert("ok")
+    if (contract?.tetherContract) {
+      const amount = parseEther("100000");
+      await contract.tetherContract.mint(CONTRACT_ADDRESS, amount);
+      alert("ok");
     }
-    if(contract?.tonContract){
-      const amount = parseEther("4000")
-      await contract.tonContract.mint("0x64F12D9e31FfDb745407445E2C010F3Aa13b8f50", amount)
-      alert("ok")
+    if (contract?.tonContract) {
+      const amount = parseEther("100000");
+      await contract.tonContract.mint(CONTRACT_ADDRESS, amount);
+      alert("ok");
     }
-    if(contract?.linkContract){
-      const amount = parseEther("4000")
-      await contract.linkContract.mint("0x64F12D9e31FfDb745407445E2C010F3Aa13b8f50", amount)
-      alert("ok")
+    if (contract?.linkContract) {
+      const amount = parseEther("100000");
+      await contract.linkContract.mint(CONTRACT_ADDRESS, amount);
+      alert("ok");
     }
-  }
+  };
 
   const handleBalance = async () => {
     // if(wallet?.contract){
-    //   const balanceBigInt = await wallet.contract.balanceOf("0x64F12D9e31FfDb745407445E2C010F3Aa13b8f50");
+    //   const balanceBigInt = await wallet.contract.balanceOf(CONTRACT_ADDRESS);
     //   console.log(ethers.formatEther(balanceBigInt));
     // }
-  }
+  };
 
   return (
     <div className="flex items-center justify-center">
       <Button onClick={handleMint}>Mint</Button>
       <Button onClick={handleBalance}>Balance</Button>
-
     </div>
   );
 };

@@ -20,7 +20,7 @@ export default function ButtonTrigger(props: ButtonTriggerProps) {
         {
           address ?
           <>
-          <div className="relative w-8 h-8 rounded-full shadow-sm bg-secondary/80">
+          <div className="relative w-8 h-8 rounded-full shadow-sm">
             <Image
               src={logo}
               alt={name}

@@ -44,6 +44,7 @@ const HistoryTransaction = (props: { address: string }) => {
                     {(transaction.method === "0x60806040" &&
                       "Contract Creation") ||
                       (transaction.method === "0x37476ced" && "Swap Token") ||
+                      (transaction.method === "0x8b85d09d" && "Buy Token") ||
                       transaction.method}
                   </div>
                   <div>{transaction.value}</div>

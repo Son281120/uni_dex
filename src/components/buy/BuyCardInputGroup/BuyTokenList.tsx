@@ -10,35 +10,21 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import Image from "next/image";
-import { Button } from "../../ui/button";
 import { tokens } from "@/config";
 
 import { Dispatch, SetStateAction } from "react";
-import ButtonTrigger from "../ButtonTrigger";
 import { IToken } from "@/type/token";
+import { ChevronDown } from "lucide-react";
+import { Button } from "../../ui/button";
 
 type TokenlistProps = {
-  firstToken: IToken;
-  setFirstToken: Dispatch<SetStateAction<IToken>>;
-  secondToken: IToken;
-  setSecondToken: Dispatch<SetStateAction<IToken>>;
-  isFirst: boolean;
-  setIsFirst: Dispatch<SetStateAction<boolean>>;
-  isSecond: boolean;
-  setIsSecond: Dispatch<SetStateAction<boolean>>;
+  token: IToken;
+  setToken: Dispatch<SetStateAction<IToken>>;
 };
 
-const TokenListFirst = (props: TokenlistProps) => {
-  const {
-    firstToken,
-    setFirstToken,
-    secondToken,
-    setSecondToken,
-    isFirst,
-    setIsFirst,
-    isSecond,
-    setIsSecond,
-  } = props;
+const BuyTokenList = (props: TokenlistProps) => {
+  const { token, setToken } = props;
+  const { address, name, symbol, logo, price } = token;
 
   const selectToken = async (
     address: string,
@@ -48,22 +34,23 @@ const TokenListFirst = (props: TokenlistProps) => {
     price: string
   ) => {
     try {
-      if (address === secondToken.address) {
-        let temp = { ...secondToken };
-        setSecondToken({ ...firstToken });
-        setFirstToken({ ...temp });
-        setIsFirst(!isFirst);
-        setIsSecond(!isSecond);
-      } else {
-        setFirstToken((prev) => ({
-          ...prev,
-          address,
-          name,
-          symbol,
-          logo,
-          price,
-        }));
-      }
+      // if (address === secondToken.address) {
+      //   let temp = { ...secondToken };
+      //   setSecondToken({ ...firstToken });
+      //   setFirstToken({ ...temp });
+      //   setIsFirst(!isFirst);
+      //   setIsSecond(!isSecond);
+      // } else {
+      //   setFirstToken((prev) => ({
+      //     ...prev,
+      //     address,
+      //     name,
+      //     symbol,
+      //     logo,
+      //     price,
+      //   }));
+      // }
+      setToken({ address, name, symbol, logo, price });
     } catch (error) {
       console.log(error);
     }
@@ -71,7 +58,21 @@ const TokenListFirst = (props: TokenlistProps) => {
 
   return (
     <Dialog>
-      <ButtonTrigger token={firstToken} />
+      <DialogTrigger asChild>
+        <button className="flex items-center justify-between min-w-[120px] rounded-full bg-primary-foreground text-primary py-1 px-2 shadow-sm hover:bg-popover hover:shadow-md transition-all">
+          <div className="relative w-8 h-8 rounded-full shadow-sm bg-transparent">
+            <Image
+              src={logo}
+              alt={name}
+              height={32}
+              width={32}
+              className="w-8 h-8"
+            />
+          </div>
+          <span>{symbol}</span>
+          <ChevronDown className=" h-[1.2rem] w-[1.2rem]" />
+        </button>
+      </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Token list</DialogTitle>
@@ -89,7 +90,7 @@ const TokenListFirst = (props: TokenlistProps) => {
                       selectToken(address, name, symbol, logo, price)
                     }
                   >
-                    <div className=" w-7 h-7 rounded-full shadow-sm">
+                    <div className=" w-7 h-7 rounded-full shadow-sm bg-secondary/80">
                       <Image
                         src={logo}
                         alt={name}
@@ -113,4 +114,4 @@ const TokenListFirst = (props: TokenlistProps) => {
   );
 };
 
-export default TokenListFirst;
+export default BuyTokenList;

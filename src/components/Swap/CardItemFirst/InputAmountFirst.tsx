@@ -1,7 +1,7 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "@/components/ui/use-toast";
 import { formatNumber } from "@/config/formatNumber";
 import useDebounce from "@/hooks/useDebounce";
 import useWallet from "@/hooks/useWallet";
@@ -32,13 +32,10 @@ const InputAmountFirst = (props: InputAmountProps) => {
     setIsSecond,
   } = props;
 
-  const { toast } = useToast();
   const { wallet } = useWallet();
   const contract = wallet?.contract;
 
-  const changeInputFirstValue = async (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const changeInputFirstValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsFirst(true);
     setIsSecond(false);
     const value = e.target.value;
