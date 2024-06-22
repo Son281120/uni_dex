@@ -11,7 +11,7 @@ const HistoryTransaction = (props: { address: string }) => {
     const fetchHistoryTransaction = async () => {
       try {
         const response = await axios.get(
-          `http://103.37.61.222:3009/api/v1/transaction/${address}`
+          `https://demo2.thietkewebsite.live/api/v1/transaction/${address}`
         );
         const data: IResult<ITransaction> = await response.data;
         setTransactions(data.result);
